@@ -1,0 +1,6 @@
+D:\Android\Android-Take-Photo-From-Camera-and-Gallery-Code-Sample-master1\app\build\intermediates\classes\debug
+D:\Android\Android-Take-Photo-From-Camera-and-Gallery-Code-Sample-master1\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-17dac5b91531950ca7bf81973a3db5c92b056e8e.jar
+D:\Android\Android-Take-Photo-From-Camera-and-Gallery-Code-Sample-master1\app\build\intermediates\pre-dexed\debug\classes-d29249b8570632702d096e7b32b1b45527c719c4.jar
+D:\Android\Android-Take-Photo-From-Camera-and-Gallery-Code-Sample-master1\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-b73397e8ef6bc698ba416dd91edb3cbc2d80a3ba.jar
+D:\Android\Android-Take-Photo-From-Camera-and-Gallery-Code-Sample-master1\app\build\intermediates\pre-dexed\debug\classes-1d23aa2afde703b6b5bd50f997693e7f89c01b45.jar
+D:\Android\Android-Take-Photo-From-Camera-and-Gallery-Code-Sample-master1\app\build\intermediates\pre-dexed\debug\classes-a27f47cca36560ca294b2a2cf4a742cc79be2cb8.jar

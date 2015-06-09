@@ -1,0 +1,5 @@
+0_03: 
+     - added bg language and a different font support ( for the textview only atm )
+
+0_02:
+     - added async task with a progress dialog for the image processing

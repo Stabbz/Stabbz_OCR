@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">takeImage</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_text_result">TextResultActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="loading">Loading...</string>
+    <string name="loading_please_wait">Processing Image...</string>
+
+</resources>
