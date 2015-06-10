@@ -1,7 +1,6 @@
 package com.tag.ddamianow;
 
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
@@ -24,20 +23,22 @@ public class TextResultActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         // Get the message from the intent
         Intent intent = getIntent();
         message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
 
 
-        // Create the text view
-        TextView textView = new TextView(this);
-        Typeface font= Typeface.createFromAsset(this.getAssets(), "DejaVuSans.ttf");
-        textView.setTypeface(font);
-        textView.setText(message);
+
 
         // Set the text view as the activity layout
-        setContentView(textView);
+        setContentView(R.layout.activity_text_result);
+        // Create the text view
+        TextView textView = (TextView) findViewById(R.id.textView_result);
+        //Typeface font= Typeface.createFromAsset(this.getAssets(), "DejaVuSans.ttf");
+        //textView.setTypeface(font);
+        textView.setText(message);
     }
 
 
