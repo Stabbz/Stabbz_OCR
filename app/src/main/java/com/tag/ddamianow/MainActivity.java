@@ -198,6 +198,7 @@ public class MainActivity extends Activity {
 
         protected void onPostExecute(Boolean result) {
             dialog.hide();
+            dialog.dismiss();
         }
     }
 
