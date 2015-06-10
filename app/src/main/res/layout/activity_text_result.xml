@@ -9,8 +9,21 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
+        android:text="No Result"
         android:id="@+id/textView_result"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerInParent="true"
+        android:editable="true"
+        android:linksClickable="true"
+        android:textSize="@dimen/abc_text_size_medium_material" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save text to file"
+        android:id="@+id/button3"
+        android:layout_below="@+id/textView_result"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:onClick="saveTextToFile"/>
 
 </RelativeLayout>
