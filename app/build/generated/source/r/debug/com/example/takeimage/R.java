@@ -1316,13 +1316,15 @@ containing a value of this type.
         public static final int action_mode_bar=0x7f09002e;
         public static final int action_mode_bar_stub=0x7f09002d;
         public static final int action_mode_close_button=0x7f090020;
-        public static final int action_settings=0x7f090045;
+        public static final int action_settings=0x7f090047;
         public static final int activity_chooser_view_content=0x7f090021;
         public static final int always=0x7f090016;
         public static final int beginning=0x7f090013;
         public static final int btnSelectPhoto=0x7f090040;
         public static final int button=0x7f090041;
         public static final int button2=0x7f090042;
+        public static final int button_saveTextToFile=0x7f090045;
+        public static final int button_sendEmail=0x7f090046;
         public static final int checkbox=0x7f090029;
         public static final int collapseActionView=0x7f090017;
         public static final int decor_content_parent=0x7f09002f;

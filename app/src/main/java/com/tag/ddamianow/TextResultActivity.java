@@ -1,6 +1,10 @@
 package com.tag.ddamianow;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
@@ -74,16 +78,20 @@ public class TextResultActivity extends ActionBarActivity {
         }
     }
 
-    // method to save resulting text to a .txt file on sd card
+    // method to save resulting text to a file on sd card
     // NB: check if card is mounted etc.. when using method
     public void generateTextOnSD(String sFileName, String sBody) {
         try {
-            File root = new File(Environment.getExternalStorageDirectory(), "Recognised_Text");
+            File root = new File(Environment.getExternalStorageDirectory(), "Recognised Text");
+            //File root = new File(Environment.getExternalStoragePublicDirectory(
+            //        Environment.DIRECTORY_PICTURES), "Recognised Text");
             if (!root.exists()) {
                 root.mkdirs();
             }
-            File gpxfile = new File(root, sFileName);
-            FileWriter writer = new FileWriter(gpxfile);
+
+            /* save file with .txt extension */
+            File ocrfile = new File(root, sFileName + ".txt");
+            FileWriter writer = new FileWriter(ocrfile);
             writer.append(sBody);
             writer.flush();
             writer.close();
@@ -110,5 +118,54 @@ public class TextResultActivity extends ActionBarActivity {
             return true;
         }
         return false;
+    }
+
+    /* used to send the Saved Text file to the users current email */
+
+
+    public void sendFileToUserEmail(View view){
+
+        /* check if user is online */
+        if (isOnline()) {
+            String userEmail = UserEmailFetcher.getEmail(getApplicationContext());
+            /* check if there is a logged in email */
+            if(userEmail != null) {
+                try {
+                    Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                    // set the type to 'email'
+                    emailIntent.setType("vnd.android.cursor.dir/email");
+                    String to[] = {userEmail};
+                    emailIntent.putExtra(Intent.EXTRA_EMAIL, to);
+                    // the mail subject
+                    emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Your Recognised Text");
+                    // the attachment
+                    String root = Environment.getExternalStorageDirectory()  + "/Recognised Text/";
+                    File file = new File(root, "Saved Text.txt");
+                    if (!file.exists() || !file.canRead()) {
+                        Toast.makeText(this, "Attachment Error", Toast.LENGTH_SHORT).show();
+                        finish();
+                        return;
+                    }
+                    Uri uri = Uri.fromFile(file);
+                    emailIntent.putExtra(Intent.EXTRA_STREAM, uri);
+
+                    startActivity(Intent.createChooser(emailIntent, "Send email..."));
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    /* Checks if phone is connected to the internet */
+    protected boolean isOnline() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
