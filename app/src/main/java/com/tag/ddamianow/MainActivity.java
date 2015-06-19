@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.takeimage.R;
 import com.googlecode.tesseract.android.TessBaseAPI;
@@ -39,7 +40,10 @@ public class MainActivity extends Activity {
     public ImageFix fix = new ImageFix();
     public String selectedImagePath;
     public String result;
+    public String toSendResult;
     private ProgressDialog dialog;
+    ImageTag imageOffTag;
+    ImageTag imageOnTag;
 
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +59,15 @@ public class MainActivity extends Activity {
                 selectImage();
             }
         });
+        /* tags used for image existance checks atm*/
+        imageOffTag = new ImageTag();
+        imageOffTag.whatAmI = "nothing";
+        imageOnTag = new ImageTag();
+        imageOnTag.whatAmI = "something";
+        /* tags */
+
         ivImage = (ImageView) findViewById(R.id.ivImage);
+        ivImage.setTag(imageOffTag);
 
         // creates the tessdata folder and copies the language file there
         TessData.initTessTrainedData(this);
@@ -129,6 +141,7 @@ public class MainActivity extends Activity {
 		}
 
 		ivImage.setImageBitmap(thumbnail);
+        ivImage.setTag(imageOnTag);
 	}
 
 	@SuppressWarnings("deprecation")
@@ -156,7 +169,7 @@ public class MainActivity extends Activity {
 		bm = BitmapFactory.decodeFile(selectedImagePath, options);
 
 		ivImage.setImageBitmap(bm);
-
+        ivImage.setTag(imageOnTag);
 	}
 
     public String convertFromUTF8(String s) {
@@ -171,7 +184,13 @@ public class MainActivity extends Activity {
 
     // the method used when OCR button is clicked
     public void doOCRStuff(View view){
-        new doOCRloader().execute();
+        ImageTag test = (ImageTag) ivImage.getTag();
+        // check if image is loaded
+        if(test.whatAmI == "something") {
+            new doOCRloader().execute();
+        } else {
+            Toast.makeText(this, "Please select an image first.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     // inner AsyncTask with a loader dialog for the image processing
@@ -183,13 +202,14 @@ public class MainActivity extends Activity {
         @Override
         protected Boolean doInBackground(Void... params) {
 
-            real.init(TessData.getTesseractFolder(), "eng+bul");
+            real.init(TessData.getTesseractFolder(), "bul");
 
             Bitmap bitmap = ((BitmapDrawable)ivImage.getDrawable()).getBitmap();
             // fix.fixOrientation(selectedImagePath, bitmap); // does nothing right now
             real.setImage(bitmap);
 
             String test = real.getUTF8Text();
+            toSendResult = test;
             result = convertFromUTF8(test);
 
             real.end();
@@ -199,13 +219,14 @@ public class MainActivity extends Activity {
         protected void onPostExecute(Boolean result) {
             dialog.hide();
             dialog.dismiss();
+            sendMessage(getWindow().getDecorView().findViewById(android.R.id.content));
         }
     }
 
     // sending the result to the result activity to display the processed text
     public void sendMessage(View view) {
         Intent intent = new Intent(this, TextResultActivity.class);
-        String message = result;
+        String message = toSendResult;
         intent.putExtra(EXTRA_MESSAGE, message);
         startActivity(intent);
     }

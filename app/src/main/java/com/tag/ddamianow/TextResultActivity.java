@@ -2,6 +2,7 @@ package com.tag.ddamianow;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -40,8 +41,9 @@ public class TextResultActivity extends ActionBarActivity {
         setContentView(R.layout.activity_text_result);
         // Create the text view
         TextView textView = (TextView) findViewById(R.id.textView_result);
-        //Typeface font= Typeface.createFromAsset(this.getAssets(), "DejaVuSans.ttf");
-        //textView.setTypeface(font);
+        Typeface font= Typeface.createFromAsset(getApplication().getAssets(), "DejaVuSans.ttf");
+
+        textView.setTypeface(font);
         textView.setText(message);
     }
 

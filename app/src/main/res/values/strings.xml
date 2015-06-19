@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">takeImage</string>
+    <string name="app_name">ImageText</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_text_result">TextResultActivity</string>
     <string name="action_settings">Settings</string>
     <string name="loading">Loading...</string>
     <string name="loading_please_wait">Processing Image...</string>
+    <string name="select_image">Select Image</string>
+    <string name="get_text">Get Text</string>
+    <string name="main_image_to_ocr">main image to OCR</string>
 
 </resources>
