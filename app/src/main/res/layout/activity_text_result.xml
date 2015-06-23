@@ -13,15 +13,23 @@
         android:layout_centerHorizontal="true"
         android:id="@+id/relativeLayout">
 
-        <TextView
+        <ScrollView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="No Result"
-            android:id="@+id/textView_result"
-            android:layout_centerInParent="true"
-            android:editable="true"
-            android:linksClickable="true"
-            android:textSize="@dimen/abc_text_size_medium_material" />
+            android:id="@+id/scrollView" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no_result"
+                android:id="@+id/textView_result"
+                android:layout_centerInParent="true"
+                android:typeface="sans"
+                android:editable="true"
+                android:linksClickable="true"
+                android:textSize="@dimen/abc_text_size_medium_material" />
+        </ScrollView>
+
     </RelativeLayout>
 
     <RelativeLayout

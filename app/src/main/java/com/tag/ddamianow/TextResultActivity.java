@@ -2,7 +2,6 @@ package com.tag.ddamianow;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -34,16 +33,12 @@ public class TextResultActivity extends ActionBarActivity {
         Intent intent = getIntent();
         message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
 
-
-
-
         // Set the text view as the activity layout
         setContentView(R.layout.activity_text_result);
         // Create the text view
         TextView textView = (TextView) findViewById(R.id.textView_result);
-        Typeface font= Typeface.createFromAsset(getApplication().getAssets(), "DejaVuSans.ttf");
+        // Typeface font = Typeface.createFromAsset(getApplication().getAssets(), "DejaVuSans.ttf");
 
-        textView.setTypeface(font);
         textView.setText(message);
     }
 
@@ -156,7 +151,11 @@ public class TextResultActivity extends ActionBarActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            } else {
+                Toast.makeText(this, "No email added to device", Toast.LENGTH_SHORT).show();
             }
+        } else {
+            Toast.makeText(this, "Not connected to the Internet.", Toast.LENGTH_SHORT).show();
         }
     }
 
