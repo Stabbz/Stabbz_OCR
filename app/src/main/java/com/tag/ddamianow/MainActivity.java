@@ -279,10 +279,10 @@ public class MainActivity extends Activity {
             Bitmap bitmap = ((BitmapDrawable)ivImage.getDrawable()).getBitmap();
             // fix.fixOrientation(selectedImagePath, bitmap); // does nothing right now
             real.setImage(bitmap);
-
             String test = real.getUTF8Text();
             toSendResult = test;
-            result = convertFromUTF8(test);
+            //result = convertFromUTF8(test);
+            result = test;
 
             real.end();
             return true;

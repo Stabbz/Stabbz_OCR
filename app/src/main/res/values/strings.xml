@@ -11,5 +11,8 @@
     <string name="get_text">Get Text</string>
     <string name="main_image_to_ocr">main image to OCR</string>
     <string name="no_result">No Result</string>
+    <string name="save_txt_to_file">Save text to file</string>
+    <string name="send_to_mail">Send to email</string>
+    <string name="save_text_to_file">Save text to file</string>
 
 </resources>

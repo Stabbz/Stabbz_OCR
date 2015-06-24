@@ -12,7 +12,7 @@ import android.content.Context;
  * This class uses the AccountManager to get the primary email address of the
  * current user.
  */
-public class UserEmailFetcher {
+class UserEmailFetcher {
 
     static String getEmail(Context context) {
         AccountManager accountManager = AccountManager.get(context);

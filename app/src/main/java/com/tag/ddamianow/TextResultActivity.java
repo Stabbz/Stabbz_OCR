@@ -23,7 +23,7 @@ import java.io.IOException;
 
 public class TextResultActivity extends ActionBarActivity {
 
-    String message;
+    private String message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +77,7 @@ public class TextResultActivity extends ActionBarActivity {
 
     // method to save resulting text to a file on sd card
     // NB: check if card is mounted etc.. when using method
-    public void generateTextOnSD(String sFileName, String sBody) {
+    void generateTextOnSD(String sFileName, String sBody) {
         try {
             File root = new File(Environment.getExternalStorageDirectory(), "Recognised Text");
             //File root = new File(Environment.getExternalStoragePublicDirectory(
@@ -99,7 +99,7 @@ public class TextResultActivity extends ActionBarActivity {
     }
 
     /* Checks if external storage is available for read and write */
-    public boolean isExternalStorageWritable() {
+    boolean isExternalStorageWritable() {
         String state = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED.equals(state)) {
             return true;
@@ -160,7 +160,7 @@ public class TextResultActivity extends ActionBarActivity {
     }
 
     /* Checks if phone is connected to the internet */
-    protected boolean isOnline() {
+    boolean isOnline() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         if (netInfo != null && netInfo.isConnectedOrConnecting()) {
