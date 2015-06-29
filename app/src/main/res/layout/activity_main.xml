@@ -18,13 +18,15 @@
         <Button
             android:fontFamily="sans-serif"
             android:id="@+id/btnSelectPhoto"
-            android:background="@drawable/my_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/select_image"
             android:textColor="@drawable/my_button_text_color"
             android:layout_toLeftOf="@+id/centerPoint2"
-            android:layout_alignParentBottom="true"/>
+            android:layout_alignParentBottom="true"
+            android:shadowColor="@color/accent_material_dark"
+            android:background="@drawable/my_button"
+            android:singleLine="false" />
 
         <TextView
             android:id="@+id/centerPoint2"

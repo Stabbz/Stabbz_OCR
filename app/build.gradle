@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.tag.ddamianow"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 21
     }
 
@@ -22,6 +22,6 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:21.0.3'
+    compile 'com.android.support:appcompat-v7:22.2.0'
     compile project(':tess-two')
 }

@@ -24,6 +24,7 @@ import java.io.IOException;
 public class TextResultActivity extends ActionBarActivity {
 
     private String message;
+    private TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +37,7 @@ public class TextResultActivity extends ActionBarActivity {
         // Set the text view as the activity layout
         setContentView(R.layout.activity_text_result);
         // Create the text view
-        TextView textView = (TextView) findViewById(R.id.textView_result);
-        // Typeface font = Typeface.createFromAsset(getApplication().getAssets(), "DejaVuSans.ttf");
+        textView = (TextView) findViewById(R.id.textView_result);
 
         textView.setText(message);
     }
@@ -65,7 +65,13 @@ public class TextResultActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
+    // unused atm
+    /*
+    public void getURLs(View view){
+        String[] urls = FindURL.extractLinks(message);
+        textView.setText(urls[0]+urls[1]); // temporary test
+    }
+    */
 
     // onClick method for the save to text file button
     public void saveTextToFile(View view){
@@ -78,23 +84,26 @@ public class TextResultActivity extends ActionBarActivity {
     // method to save resulting text to a file on sd card
     // NB: check if card is mounted etc.. when using method
     void generateTextOnSD(String sFileName, String sBody) {
-        try {
-            File root = new File(Environment.getExternalStorageDirectory(), "Recognised Text");
-            //File root = new File(Environment.getExternalStoragePublicDirectory(
-            //        Environment.DIRECTORY_PICTURES), "Recognised Text");
-            if (!root.exists()) {
-                root.mkdirs();
-            }
+        if(isExternalStorageWritable()) {
+            try {
+                File root = new File(Environment.getExternalStorageDirectory(), "Recognised Text");
+
+                if (!root.exists()) {
+                    root.mkdirs();
+                }
 
             /* save file with .txt extension */
-            File ocrfile = new File(root, sFileName + ".txt");
-            FileWriter writer = new FileWriter(ocrfile);
-            writer.append(sBody);
-            writer.flush();
-            writer.close();
-            Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
-        } catch (IOException e) {
-            e.printStackTrace();
+                File ocrfile = new File(root, sFileName + ".txt");
+                FileWriter writer = new FileWriter(ocrfile);
+                writer.append(sBody);
+                writer.flush();
+                writer.close();
+                Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Toast.makeText(this, "External storage unavailable.", Toast.LENGTH_SHORT).show();
         }
     }
 

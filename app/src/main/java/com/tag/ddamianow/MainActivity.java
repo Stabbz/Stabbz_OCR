@@ -11,7 +11,6 @@ import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -42,13 +41,13 @@ public class MainActivity extends Activity {
 	public ImageView ivImage;
     public TessBaseAPI real = new TessBaseAPI();
     public ImageFix fix = new ImageFix();
-    public String selectedImagePath;
+    public static String selectedImagePath;
     public String result;
     public String toSendResult;
     private ProgressDialog dialog;
     public ImageTag imageOffTag;
     public ImageTag imageOnTag;
-
+    public Bitmap bigBitmap;
 
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -93,8 +92,7 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(DialogInterface dialog, int item) {
 				if (items[item].equals("Take Photo")) {
-					/*Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-					startActivityForResult(intent, REQUEST_CAMERA);*/
+
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     File file = new File(Environment.getExternalStorageDirectory()+File.separator + "TextImage.jpg");
                     intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
@@ -119,33 +117,33 @@ public class MainActivity extends Activity {
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-        //Check that request code matches ours:
-
 
 		if (resultCode == Activity.RESULT_OK) {
+
+            /* when captured by the app */
             if (requestCode == CAPTURE_IMAGE_FULLSIZE_ACTIVITY_REQUEST_CODE)
             {
                 //Get our saved file into a bitmap object:
                 File file = new File(Environment.getExternalStorageDirectory()+File.separator + "TextImage.jpg");
-                Bitmap bitmap = decodeSampledBitmapFromFile(file.getAbsolutePath(), 1000, 700);
+                Bitmap bitmap = decodeSampledBitmapFromFile(file.getAbsolutePath());
+                // getting the whole bitmap for testing
+                bigBitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+                fix.fixOrientation(file.getAbsolutePath(), bigBitmap);
                 ivImage.setImageBitmap(bitmap);
                 ivImage.setTag(imageOnTag);
-
+                lockOrientation(MainActivity.this);
             }
 			if (requestCode == SELECT_FILE)
 				onSelectFromGalleryResult(data);
-			/*else if (requestCode == REQUEST_CAMERA)
-				onCaptureImageResult(data);*/
 		}
 	}
-    public static Bitmap decodeSampledBitmapFromFile(String path, int reqWidth, int reqHeight)
-    { // BEST QUALITY MATCH
 
-        //First decode with inJustDecodeBounds=true to check dimensions
+    public static Bitmap decodeSampledBitmapFromFile(String path)
+    {
+        selectedImagePath = path;
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         Bitmap bm;
-
 
         BitmapFactory.decodeFile(path, options);
         final int REQUIRED_SIZE = 400;
@@ -156,63 +154,13 @@ public class MainActivity extends Activity {
         options.inSampleSize = scale;
         options.inJustDecodeBounds = false;
 
-
         Bitmap bitmapR = BitmapFactory.decodeFile(path, options);
 
-        /*// Calculate inSampleSize, Raw height and width of image
-        final int height = options.outHeight;
-        final int width = options.outWidth;
-        options.inPreferredConfig = Bitmap.Config.RGB_565;
-        int inSampleSize = 1;
-
-        if (height > reqHeight)
-        {
-            inSampleSize = Math.round((float)height / (float)reqHeight);
-        }
-        int expectedWidth = width / inSampleSize;
-
-        if (expectedWidth > reqWidth)
-        {
-            //if(Math.round((float)width / (float)reqWidth) > inSampleSize) // If bigger SampSize..
-            inSampleSize = Math.round((float)width / (float)reqWidth);
-        }
-
-        options.inSampleSize = inSampleSize;
-
-        // Decode bitmap with inSampleSize set
-        options.inJustDecodeBounds = false;
-        Bitmap bitmapR = BitmapFactory.decodeFile(path, options);*/
         return bitmapR;
     }
 
-	/*private void onCaptureImageResult(Intent data) {
-
-		Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-		thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
-
-		File destination = new File(Environment.getExternalStorageDirectory(),
-				System.currentTimeMillis() + ".jpg");
-
-		FileOutputStream fo;
-		try {
-			destination.createNewFile();
-			fo = new FileOutputStream(destination);
-			fo.write(bytes.toByteArray());
-			fo.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		ivImage.setImageBitmap(thumbnail);
-        ivImage.setTag(imageOnTag);
-        // making the buttons be on top of the image
-        findViewById(R.id.buttonsLayout).bringToFront();
-	}*/
-
 	@SuppressWarnings("deprecation")
+    /* when taken from gallery */
 	private void onSelectFromGalleryResult(Intent data) {
 		Uri selectedImageUri = data.getData();
 		String[] projection = { MediaColumns.DATA };
@@ -222,7 +170,8 @@ public class MainActivity extends Activity {
 		cursor.moveToFirst();
 
 		selectedImagePath = cursor.getString(column_index);
-
+        // getting the whole bitmap for testing
+        bigBitmap = BitmapFactory.decodeFile(selectedImagePath);
 		Bitmap bm;
 		BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inJustDecodeBounds = true;
@@ -240,6 +189,7 @@ public class MainActivity extends Activity {
         ivImage.setTag(imageOnTag);
         // making the buttons be on top of the image
         findViewById(R.id.buttonsLayout).bringToFront();
+        lockOrientation(MainActivity.this);
 	}
 
     public String convertFromUTF8(String s) {
@@ -274,10 +224,11 @@ public class MainActivity extends Activity {
         @Override
         protected Boolean doInBackground(Void... params) {
 
-            real.init(TessData.getTesseractFolder(), "bul");
+            real.init(TessData.getTesseractFolder(), "eng");
+            fix.fixOrientation(selectedImagePath, bigBitmap); // fix image rotation
+           // Bitmap bitmap = ((BitmapDrawable)ivImage.getDrawable()).getBitmap();
+            Bitmap bitmap = bigBitmap;
 
-            Bitmap bitmap = ((BitmapDrawable)ivImage.getDrawable()).getBitmap();
-            // fix.fixOrientation(selectedImagePath, bitmap); // does nothing right now
             real.setImage(bitmap);
             String test = real.getUTF8Text();
             toSendResult = test;
@@ -305,6 +256,10 @@ public class MainActivity extends Activity {
         intent.putExtra(EXTRA_MESSAGE, message);
         startActivity(intent);
     }
+
+    /* unlocks screen rotation
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+    */
 
     /* locks screen orientation */
     public static void lockOrientation(Activity activity) {

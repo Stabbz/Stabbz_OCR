@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <string name="app_name_bg">ImageTextBG</string>
     <string name="app_name">ImageText</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_text_result">TextResultActivity</string>

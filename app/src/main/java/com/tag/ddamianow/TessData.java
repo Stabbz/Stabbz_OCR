@@ -22,7 +22,7 @@ public class TessData {
 
     private static final String tessdir = "tesseract";
     private static final String subdir = "tessdata";
-    private static final String filename = "bul.traineddata";
+    private static final String filename = "eng.traineddata";
 
     private static String trainedDataPath;
 
@@ -94,7 +94,7 @@ public class TessData {
         // writing english file to sd card
         try {
             InputStream fileInputStream = context.getResources()
-                    .openRawResource(R.raw.bul_traineddata);
+                    .openRawResource(R.raw.eng_traineddata);
 
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
 
@@ -117,31 +117,6 @@ public class TessData {
             Log.e(TAG, "Error reading raw training data file\n" + e.getMessage());
         }
 
-        // writing bul file to sd card
-       /* try {
-            InputStream fileInputStream = context.getResources()
-                    .openRawResource(R.raw.bul_traineddata);
-
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-
-            byte[] b = new byte[1024];
-
-            int bytesRead;
-
-            while (( bytesRead = fileInputStream.read(b))!=-1){
-                bos.write(b, 0, bytesRead);
-            }
-
-            fileInputStream.close();
-
-            return bos.toByteArray();
-
-        } catch (FileNotFoundException e) {
-            Log.e(TAG, "Error reading raw training data file\n" + e.getMessage());
-            return null;
-        } catch (IOException e) {
-            Log.e(TAG, "Error reading raw training data file\n" + e.getMessage());
-        }*/
 
         return null;
     }

@@ -1,6 +1,6 @@
 D:\Android\Stabbz_OCR\app\build\intermediates\classes\debug
-D:\Android\Stabbz_OCR\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-17dac5b91531950ca7bf81973a3db5c92b056e8e.jar
+D:\Android\Stabbz_OCR\app\build\intermediates\pre-dexed\debug\support-annotations-22.2.0-5e3647bf47ce6113c46ddfe169b9cee86785793c.jar
 D:\Android\Stabbz_OCR\app\build\intermediates\pre-dexed\debug\classes-f6d04c0d5844d43e26bdf494a64783d8c2f815de.jar
-D:\Android\Stabbz_OCR\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-75d97124f797aae10c4b3796e4b979d2f489efa1.jar
-D:\Android\Stabbz_OCR\app\build\intermediates\pre-dexed\debug\classes-886458b279a3b5389af6876ecf3506a7e53324f3.jar
-D:\Android\Stabbz_OCR\app\build\intermediates\pre-dexed\debug\classes-235e31cbc3db095c9b0214626d4a420dd90ac74d.jar
+D:\Android\Stabbz_OCR\app\build\intermediates\pre-dexed\debug\internal_impl-22.2.0-ea005c8fc8db8bee5dc1cf3214b5a51e9b9c6dd8.jar
+D:\Android\Stabbz_OCR\app\build\intermediates\pre-dexed\debug\classes-568b1038c0a6824a324be71784c3e4b0c568193d.jar
+D:\Android\Stabbz_OCR\app\build\intermediates\pre-dexed\debug\classes-1cca98ac518f5d3c60e8f4cd07e96d66f4664bca.jar
